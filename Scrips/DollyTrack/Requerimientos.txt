@@ -1,0 +1,3 @@
+Packages:
+	Unity Registry:
+		Cinemachine
