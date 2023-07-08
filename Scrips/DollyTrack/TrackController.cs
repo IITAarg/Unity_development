@@ -9,8 +9,10 @@ public class TrackController : MonoBehaviour
     [SerializeField] CinemachineDollyCart Cart;
 
     [SerializeField] float rango = 0.02f;
+    [SerializeField] float TiempoEspera = 10;
 
     int Poss=1;
+    float speed;
     
     CinemachineSmoothPath.Waypoint[] Waypoints;
     // Start is called before the first frame update
@@ -18,7 +20,7 @@ public class TrackController : MonoBehaviour
     {
         //Obtengo los waypoints
         Waypoints = Track.m_Waypoints;
-
+        speed = Cart.m_Speed;
     }
 
     // Update is called once per frame
@@ -31,13 +33,15 @@ public class TrackController : MonoBehaviour
         {
             Poss = 0;
         }
-        if(Waypoints.Length <= Poss)
+        if(Waypoints.Length > Poss)
         {
+            print(Waypoints.Length);
+            print(Poss);
             distancia = Cart.gameObject.transform.position - (Track.gameObject.transform.position + Waypoints[Poss].position);
             //Si la distancia es menor al rango, se detiene al cart
             if (Mathf.Abs(distancia.x) <= rango && Mathf.Abs(distancia.y) <= rango && Mathf.Abs(distancia.z) <= rango)
             {
-                StartCoroutine(Esperar(10, 2));
+                StartCoroutine(Esperar(TiempoEspera, speed));
                 Cart.m_Speed = 0;
 
                 Poss += 1;
@@ -50,7 +54,11 @@ public class TrackController : MonoBehaviour
     {
         Waypoints = Track.m_Waypoints;
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(Track.gameObject.transform.position + Waypoints[Poss].position, rango);
+
+        if (Waypoints.Length > Poss)
+        {
+            Gizmos.DrawWireSphere(Track.gameObject.transform.position + Waypoints[Poss].position, rango);
+        }
     }
 
     IEnumerator Esperar(float time,float speed)
