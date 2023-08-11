@@ -8,8 +8,11 @@ public class SimpleEnemy : MonoBehaviour
     [SerializeField] float Radio;
 
 
-    [SerializeField] Transform[] RutaIdle;
+    [SerializeField] Transform[] Path;
+    [SerializeField] bool RandomPath;
     [SerializeField] float NextCheckPoint;
+
+    int currentWPObj;
     int CheckPointIndex = 0;
 
     bool SeguirRuta = true;
@@ -29,11 +32,20 @@ public class SimpleEnemy : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, RutaIdle[CheckPointIndex].position) <= NextCheckPoint)
+            if (Vector3.Distance(transform.position, Path[currentWPObj].position) <= NextCheckPoint)
             {
-                CheckPointIndex = CheckPointIndex == RutaIdle.Length - 1 ? 0 : CheckPointIndex + 1;
-            }
-            Agent.SetDestination(RutaIdle[CheckPointIndex].position);
+                if (RandomPath)
+                {
+                    currentWPObj = Random.Range(0, Path.Length - 1);
+
+                }
+                else
+                {
+                    CheckPointIndex = CheckPointIndex == Path.Length - 1 ? 0 : CheckPointIndex + 1;
+                    currentWPObj = CheckPointIndex;
+                }
+                Agent.SetDestination(Path[currentWPObj].position);
+            }          
         }
     }
     bool EnCampoDeVision(GameObject Objeto)
