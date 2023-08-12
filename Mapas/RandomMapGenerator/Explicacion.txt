@@ -1,0 +1,20 @@
+-MapGenerator.cs : Es un Scrip que almacena una lista de partes o prefabricados. Este scrip se supone que tiene
+que estar en un objeto aue se encargue de controlar la generacion del mapa. 
+En la escena de ejemplo esta dentro de un objeto vacio. Ademas a la lista de partes del scrip la llenamos
+con los prefabricados que queremos que puedan aparecer
+
+
+-MapPart: Este es un scrip que tiene que estar en cada una de las partes que vamos a generar. Este scrip 
+nececita una referencia en "SpawnEmpty". Este objeto tiene que ser un objeto que como hijo tenga unicamnte.
+los puntos donde spawnearan los objetos adyacentes.Este scrip detecta cuando un objeto con el tag player 
+entra en una zona y en ese momento genera objetos aleatorios en sus vecinos. 
+
+SETUP:
+-El jugador requiere un TAG "Player"
+-En un objeto vacio co nel tag "MapGenerator" agregar el srcip de "MapGenerator"
+-Hacer prefabricados con las partes de mi mapa. Teniendo en cuenta que el objeto principal tiene
+que tener el script MapPart. Y ademas una referencia a sus puntos de Spawn. Por ultimo
+tiene que tener un collider con "IsTrigger" para que mi perosnaje al entrar a el genere los vecinos de mi mapa
+-Cada parte nececita un rigibody para detectar colisio con el personaje. Para que no caiga el objeto al 
+generarse podemos desactivar la gravedad y podemos ademas marcar "iskinematic"
+
