@@ -9,7 +9,7 @@ public class CameraVisionFPS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(Interaccion))
+        if (Input.GetKeyDown(Interaccion))
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.forward,out hit, Rango))
